@@ -1,23 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   print.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jichen-m <jichen-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/09/12 11:07:31 by jichen-m          #+#    #+#             */
-/*   Updated: 2015/09/12 23:30:50 by jichen-m         ###   ########.fr       */
+/*   Created: 2015/09/12 23:26:23 by jichen-m          #+#    #+#             */
+/*   Updated: 2015/09/12 23:34:41 by jichen-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
 
-int		ft_check_error(char **argv);
-void	ft_print(char **argv);
-
-void	ft_point_to_zero(char **argv)
+void	ft_print(char **argv)
 {
 	int		i;
 	int		j;
@@ -26,29 +21,14 @@ void	ft_point_to_zero(char **argv)
 	while (i <= 9)
 	{
 		j = 0;
-		while (j < 9)
+		while (argv[i][j] != '\0')
 		{
-			if (argv[i][j] == '.')
-				argv[i][j] = '0';
+			write (1, &argv[i][j], 1);
+			if (j != 8)
+				write (1, " ", 1);
 			j++;
 		}
+		write (1, "\n", 1);
 		i++;
 	}
-}
-
-int		main(int argc, char **argv)
-{
-	if (argc == 10)
-	{
-		if (ft_check_error(argv) == 1)
-		{
-			write (1, "Erreur\n", 7);
-			return (0);
-		}
-		ft_point_to_zero(argv);
-		ft_print(argv);
-	}
-	else
-		write (1, "Erreur\n", 7);
-	return (0);
 }
