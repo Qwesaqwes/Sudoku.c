@@ -1,91 +1,86 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   do_sudoku.c                                        :+:      :+:    :+:   */
+/*   solver.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jichen-m <jichen-m@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gtserenb <gtserenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/09/13 11:49:03 by jichen-m          #+#    #+#             */
-/*   Updated: 2015/09/13 21:20:03 by jichen-m         ###   ########.fr       */
+/*   Created: 2015/09/13 14:44:25 by gtserenb          #+#    #+#             */
+/*   Updated: 2015/09/13 21:43:57 by jichen-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-
-int		ft_verif_lin(char **argv, int lin, char k)
+int		ft_verif_lin(char **tab, int y, char nb)
 {
-	int col;
+	int		i;
 
-	col = 0;
-	while (col < 9)
+	i = 0;
+	while (i < 9)
 	{
-		if (argv[lin][col] == k)
+		if (tab[y][i] == nb)
 			return (0);
-		col++;
+		i++;
 	}
 	return (1);
 }
 
-int		ft_verif_col(char **argv, int col, char k)
+int		ft_verif_col(char **tab, int x, char nb)
 {
-	int lin;
+	int		j;
 
-	lin = 0;
-	while (lin < 9)
+	j = 0;
+	while (j < 9)
 	{
-		if (argv[lin][col] == k)
+		if (tab[j][x] == nb)
 			return (0);
-		lin++;
+		j++;
 	}
 	return (1);
 }
 
-int		ft_verif_bloc(char **argv, int lin, int col, char k)
+int		ft_verif_bloc(char **tab, int x, int y, char nb)
 {
-	int lin2;
-	int col2;
+	int		i;
+	int		j;
 
-	lin2 = lin - (lin % 3);
-	col2 = col - (col % 3);
-	lin = lin2;
-	while (lin < lin2 + 3)
+	i = (x / 3) * 3;
+	while (i < (x / 3) * 3 + 3)
 	{
-		col = col2;
-		while (col < col2 + 3)
+		j = (y / 3) * 3;
+		while (j < (y / 3) * 3 + 3)
 		{
-			if (argv[lin][col] == k)
-				return (1);
-			col++;
+			if (tab[j][i] == nb)
+				return (0);
+			j++;
 		}
-		lin++;
+		i++;
 	}
-	return (0);
+	return (1);
 }
 
-int		ft_do_sudoku(char **argv, int lin, int col)
+int		ft_do_sudoku(char **tab, int x, int y)
 {
 	char	nb;
 
-	if (lin >= 9 || col >= 9)
+	if (y >= 9 || x >= 9)
 		return (1);
-	if (argv[lin][col] == '0')
+	if (tab[y][x] == '0')
 	{
 		nb = '1';
 		while (nb <= '9')
 		{
-			if (ft_verif_lin(argv, lin, nb) == 1 &&
-				ft_verif_col(argv, col, nb) == 1 &&
-				ft_verif_bloc(argv, lin, col, nb) == 1)
+			if (ft_verif_lin(tab, y, nb) && ft_verif_col(tab, x, nb)
+				&& ft_verif_bloc(tab, x, y, nb))
 			{
-				argv[lin][col] = nb;
-				if (ft_do_sudoku(argv, (col + 1) % 9, lin + ((col + 1) / 9)))
+				tab[y][x] = nb;
+				if (ft_do_sudoku(tab, (x + 1) % 9, y + ((x + 1) / 9)))
 					return (1);
 			}
 			nb++;
 		}
-		argv[lin][col] = '0';
+		tab[y][x] = '0';
 		return (0);
 	}
 	else
-		return (ft_do_sudoku(argv, (col + 1) % 9, lin + ((col + 1) / 9)));
+		return (ft_do_sudoku(tab, (x + 1) % 9, y + ((x + 1) / 9)));
 }

@@ -6,11 +6,10 @@
 /*   By: jichen-m <jichen-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/12 22:55:06 by jichen-m          #+#    #+#             */
-/*   Updated: 2015/09/12 23:16:14 by jichen-m         ###   ########.fr       */
+/*   Updated: 2015/09/13 21:42:14 by jichen-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// Check les arguments, si on a un erreur, on return 1 sinon 0
 int		ft_check_error(char **argv)
 {
 	int		i;
