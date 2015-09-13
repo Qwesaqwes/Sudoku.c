@@ -5,12 +5,12 @@ TMP=*~
 all : $(NAME)
 
 $(NAME) :
-	gcc -o $(NAME) $(SRC)
+	gcc -Wall -Wextra -Werror -o $(NAME) $(SRC)
 
 clean :
 	rm -rf $(TMP)
 
-fclean :
+fclean : clean
 	rm -rf $(NAME)
 
 re : fclean all
