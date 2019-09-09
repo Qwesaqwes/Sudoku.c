@@ -45,7 +45,7 @@ int		main(int argc, char **argv)
 			return (0);
 		}
 		ft_point_to_zero(argv);
-		if (ft_do_sudoku(argv + 1, 0, 0) = 1)
+		if (ft_do_sudoku(argv + 1, 0, 0) == 1)
 			ft_print(argv);
 	}
 	else
